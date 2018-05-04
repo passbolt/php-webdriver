@@ -521,7 +521,7 @@ class RemoteWebDriver implements WebDriver, JavaScriptExecutor, WebDriverHasInpu
      * @param int $timeout_in_ms
      * @return array
      */
-    public static function getAllSessions($selenium_server_url = 'http://localhost:4444/wd/hub', $timeout_in_ms = 30000)
+    public static function getAllSessions($selenium_server_url = 'http://localhost:4444/wd/hub', $timeout_in_ms = 60000)
     {
         $executor = new HttpCommandExecutor($selenium_server_url);
         $executor->setConnectionTimeout($timeout_in_ms);
