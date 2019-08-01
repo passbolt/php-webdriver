@@ -44,7 +44,7 @@ class WebDriverTestCase extends TestCase
     {
         $this->desiredCapabilities = new DesiredCapabilities();
 
-        if ($this->isSauceLabsBuild()) {
+        if (static::isSauceLabsBuild()) {
             $this->setUpSauceLabs();
         } else {
             if (getenv('BROWSER_NAME')) {
@@ -55,7 +55,8 @@ class WebDriverTestCase extends TestCase
 
             if ($browserName === WebDriverBrowserType::CHROME) {
                 $chromeOptions = new ChromeOptions();
-                $chromeOptions->addArguments(['--headless', 'window-size=1024,768']);
+                // --no-sandbox is a workaround for Chrome crashing: https://github.com/SeleniumHQ/selenium/issues/4961
+                $chromeOptions->addArguments(['--headless', 'window-size=1024,768', '--no-sandbox']);
                 $this->desiredCapabilities->setCapability(ChromeOptions::CAPABILITY, $chromeOptions);
             }
 
@@ -86,7 +87,7 @@ class WebDriverTestCase extends TestCase
     /**
      * @return bool
      */
-    public function isSauceLabsBuild()
+    public static function isSauceLabsBuild()
     {
         return getenv('SAUCELABS') ? true : false;
     }
